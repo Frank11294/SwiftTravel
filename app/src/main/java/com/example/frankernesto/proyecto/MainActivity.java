@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                              finish();
                              startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
                          }else{
-                             Toast.makeText(MainActivity.this,"Fallo en el registro..  intente de nuevo"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                             Toast.makeText(MainActivity.this,"Fallo en el registro 2..  intente de nuevo"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                              barraDialogo.dismiss();
                          }
                     }
