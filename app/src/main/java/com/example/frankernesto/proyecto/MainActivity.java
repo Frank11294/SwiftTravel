@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.LoginFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void registrarUsuario(){
         String email = editTextMail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String password = editTextPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)){
 
@@ -87,7 +91,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                              finish();
                              startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
                          }else{
-                             Toast.makeText(MainActivity.this,"Fallo en el registro..  intente de nuevo"+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                             try{
+                                 throw task.getException();
+                             }catch(FirebaseAuthWeakPasswordException e){
+                                 editTextPassword.setError(getString(R.string.ERROR_CONTRASENA_DEBIL));
+                                 editTextPassword.requestFocus();
+                             }catch(FirebaseAuthInvalidCredentialsException e){
+                                 editTextMail.setError(getString(R.string.ERROR_EMAIL_INVALIDO));
+                                 editTextMail.requestFocus();
+                             }catch(FirebaseAuthUserCollisionException e) {
+                                 editTextMail.setError(getString(R.string.ERROR_USUARIO_EXISTE));
+                                 editTextPassword.requestFocus();
+                             }catch(Exception e){
+                                 Log.e("MiApp",e.getMessage());
+                             }
+
                              barraDialogo.dismiss();
                          }
                     }

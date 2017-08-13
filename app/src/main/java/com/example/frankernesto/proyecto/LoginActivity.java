@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        barraDialogo.setMessage("Registrando Usuario...");
+        barraDialogo.setMessage("Cargando...");
         barraDialogo.show();
 
         firebaseAuth.signInWithEmailAndPassword(email,password)
@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(task.isSuccessful()){
                           finish();
                           startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
+                        }else{
+                          Toast.makeText(getApplicationContext(),"Nombre de usuario o contraseña invalidos",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
