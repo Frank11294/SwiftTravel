@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "869254609650",
+    "firebase_url": "https://proyectoauthf.firebaseio.com",
+    "project_id": "proyectoauthf",
+    "storage_bucket": "proyectoauthf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869254609650:android:c8772ce79b89d0e3",
+        "android_client_info": {
+          "package_name": "com.example.frankernesto.proyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869254609650-e5ovidrotdsag1aj9k1ju174fgokmr4e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnBj4r2H43l48mKzDnKlzJvyNbxB6J8kk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
