@@ -32,7 +32,7 @@ public class ViajesActivity extends AppCompatActivity implements View.OnClickLis
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        textViewUserEmail.setText("Bienvenido"+user.getEmail());
+        textViewUserEmail.setText("Bienvenido "+user.getEmail());
 
 
         buttonLogout = (Button)findViewById(R.id.Exit);
