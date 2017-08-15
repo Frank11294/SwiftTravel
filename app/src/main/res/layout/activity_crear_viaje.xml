@@ -7,18 +7,6 @@
     android:orientation="vertical">
 
 
-    <android.support.v4.widget.Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        />
-
-    <AutoCompleteTextView
-        android:id="@+id/autoCompleteTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Donde quieres ir?"
-        />
 
     <fragment
         android:id="@+id/place_autocomplete_fragment"
