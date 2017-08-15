@@ -19,7 +19,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ViajesActivity"></activity>
+        <activity android:name=".ViajesActivity" />
+        <activity android:name=".CrearViajeActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD68b2rZ58lgs4ZsdoSgFaYtLYyIVnb7dE"/>
+
+
+
     </application>
 
 </manifest>

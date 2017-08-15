@@ -3,4 +3,5 @@
     <string name="ERROR_CONTRASENA_DEBIL">La contraseña es muy pequeña</string>
     <string name="ERROR_EMAIL_INVALIDO">La direccion de correo es incorrecta</string>
     <string name="ERROR_USUARIO_EXISTE">Este usuario ya esta en uso</string>
+    <string name="title_activity_crear_viaje">CrearViajeActivity</string>
 </resources>

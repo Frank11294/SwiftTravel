@@ -16,7 +16,8 @@ public class ViajesActivity extends AppCompatActivity implements View.OnClickLis
 
     private TextView textViewUserEmail;
 
-    private Button buttonLogout;
+
+    private Button buttonLogout, crearViaje;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,10 @@ public class ViajesActivity extends AppCompatActivity implements View.OnClickLis
 
 
         buttonLogout = (Button)findViewById(R.id.Exit);
+        crearViaje = (Button)findViewById(R.id.CREAR_VIAJE);
 
         buttonLogout.setOnClickListener(this);
+        crearViaje.setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +50,9 @@ public class ViajesActivity extends AppCompatActivity implements View.OnClickLis
             firebaseAuth.signOut();
             finish();
             startActivity(new Intent(this,LoginActivity.class));
+        }
+        if(view == crearViaje){
+            startActivity(new Intent(this,CrearViajeActivity.class));
         }
 
 
