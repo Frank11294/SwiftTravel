@@ -5,7 +5,9 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.LoginFilter;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null ){
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registrar.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
         barraDialogo=new ProgressDialog(this);
+
 
 
 
@@ -129,4 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
 }

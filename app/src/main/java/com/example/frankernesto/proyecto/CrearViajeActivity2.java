@@ -4,30 +4,23 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.GeoDataApi;
 import com.google.android.gms.maps.GoogleMap;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -44,7 +37,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
     private String Placeid, Nom;
     private TextView nombreLoc;
-    private final String API_KEY = "AIzaSyCDabyMbAGESJzhzvPSb-mVx2eQOinJtHs";
+    private final String API_KEY = "AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898";
 
     private ImageView imagen;
     String respuesta = null;
@@ -61,16 +54,29 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_viaje2);
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        imagen = findViewById(R.id.imageView2);
-        nombreLoc = findViewById(R.id.textView);
-
         intent = getIntent();
 
         Placeid = intent.getStringExtra("PlaceID");
         Nom = intent.getStringExtra("NOMBRE");
+
+        imagen = findViewById(R.id.imageView2);
+        nombreLoc = findViewById(R.id.textView);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.cast_expanded_controller_seek_bar_progress_background_tint_color)));
+        actionBar.setTitle(Nom);
+        actionBar.show();
+
+        // ESTO NO SE PUEDE QUEDAR ASI (estas dos lineas hay q arreglarlas)
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+
+
+
 
         nombreLoc.setText(Nom);
         Log.e("ID DEL LUGAR: ",Placeid);
