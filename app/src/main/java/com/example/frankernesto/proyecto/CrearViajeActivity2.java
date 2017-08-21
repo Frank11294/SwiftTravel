@@ -31,22 +31,20 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private String TAG="URL ERROR >>> : ";
     private Intent intent;
 
-    private GoogleMap mMap;
-    private GoogleApiClient mGoogleApiClient;
-    private GeoDataApi mGeoDataApi;
-
-    private String Placeid, Nom;
+    private String Placeid, Nom,imagenUrl;
     private TextView nombreLoc;
     private final String API_KEY = "AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898";
 
     private ImageView imagen;
-    String respuesta = null;
+    private String respuesta = null;
 
     URLServicio servicio;
     private ProgressDialog barraDialogo;
     private ArrayList<String> fotosR;
 
+
     public CrearViajeActivity2()  {
+
     }
 
     @Override
@@ -60,13 +58,12 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         Nom = intent.getStringExtra("NOMBRE");
 
         imagen = findViewById(R.id.imageView2);
-        nombreLoc = findViewById(R.id.textView);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.cast_expanded_controller_seek_bar_progress_background_tint_color)));
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.cast_intro_overlay_background_color)));
         actionBar.setTitle(Nom);
         actionBar.show();
 
@@ -74,20 +71,15 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-
-
-
-
-        nombreLoc.setText(Nom);
         Log.e("ID DEL LUGAR: ",Placeid);
 
         //aqui extraigo el reference de google maps API Places
 
-       respuesta=String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s",Placeid,API_KEY);
+        respuesta=String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s",Placeid,API_KEY);
 
 
-       servicio= new URLServicio();
-       String jsonStr = servicio.UrlServicio(respuesta);
+        servicio= new URLServicio();
+        String jsonStr = servicio.UrlServicio(respuesta);
 
 
         fotosR = new ArrayList<>();
@@ -126,22 +118,19 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         }
 
 
-         // AQUI ES DONDE HAGO LA CONSULTA A GOOGLE PLACE PHOTOS
-        String imagenUrl =String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%s&key=%s",fotosR.get(0),API_KEY);
+//          AQUI ES DONDE HAGO LA CONSULTA A GOOGLE PLACE PHOTOS
+
+        imagenUrl =String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%s&key=%s",fotosR.get(0),API_KEY);
         try{
             URL url2 = new URL(imagenUrl);
             Bitmap bmp = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
             imagen.setImageBitmap(bmp);
-
         }catch(MalformedURLException ex){
 
         }catch(IOException ex){
 
         }
-
-
-
     }
-
 }
+
 
