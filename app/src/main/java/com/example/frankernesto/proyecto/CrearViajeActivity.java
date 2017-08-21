@@ -35,9 +35,12 @@ public class CrearViajeActivity extends AppCompatActivity {
                 String id = place.getId();
                 String nombre = place.getName().toString();
 
+
                 intent = new Intent(getApplicationContext(),CrearViajeActivity2.class);
-                intent.putExtra("ID",id);
+                intent.putExtra("PlaceID",id);
                 intent.putExtra("NOMBRE",nombre);
+
+
 
                 startActivity(intent);
 

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -83,7 +87,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                           finish();
                           startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
                         }else{
-                          Toast.makeText(getApplicationContext(),"Nombre de usuario o contraseña invalidos",Toast.LENGTH_SHORT).show();
+                            try{
+                                throw task.getException();
+                            }catch(FirebaseAuthInvalidCredentialsException e){
+                                editTextMail.setError(getString(R.string.ERROR_EMAIL_INVALIDO));
+                                editTextMail.requestFocus();
+                            }catch(Exception e){
+                                Log.e("MiApp",e.getMessage());
+                            }
+
+                            barraDialogo.dismiss();
                         }
                     }
                 });

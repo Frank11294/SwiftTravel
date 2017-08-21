@@ -1,6 +1,9 @@
 package com.example.frankernesto.proyecto;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registrar.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
         barraDialogo=new ProgressDialog(this);
+
+
 
 
     }

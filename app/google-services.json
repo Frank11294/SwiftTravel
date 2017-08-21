@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "869254609650",
-    "firebase_url": "https://proyectoauthf.firebaseio.com",
-    "project_id": "proyectoauthf",
-    "storage_bucket": "proyectoauthf.appspot.com"
+    "project_number": "1019178550986",
+    "firebase_url": "https://swifttravel-f89e3.firebaseio.com",
+    "project_id": "swifttravel-f89e3",
+    "storage_bucket": "swifttravel-f89e3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:869254609650:android:c8772ce79b89d0e3",
+        "mobilesdk_app_id": "1:1019178550986:android:c8772ce79b89d0e3",
         "android_client_info": {
           "package_name": "com.example.frankernesto.proyecto"
         }
       },
       "oauth_client": [
         {
-          "client_id": "869254609650-e5ovidrotdsag1aj9k1ju174fgokmr4e.apps.googleusercontent.com",
+          "client_id": "1019178550986-q53hqtmk8phcbk3g0k6nlpepttb0mdqf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frankernesto.proyecto",
+            "certificate_hash": "6c42dd02e5d2548936be958f5801362bed962734"
+          }
+        },
+        {
+          "client_id": "1019178550986-hl4bk6a5a020o0vonok2iv76gqghj2e8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDnBj4r2H43l48mKzDnKlzJvyNbxB6J8kk"
+          "current_key": "AIzaSyA4TzwMrbffddkOx65rk1bvTfBB0FnkfK0"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019178550986-hl4bk6a5a020o0vonok2iv76gqghj2e8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

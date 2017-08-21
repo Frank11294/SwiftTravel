@@ -24,7 +24,8 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD68b2rZ58lgs4ZsdoSgFaYtLYyIVnb7dE" />
+            android:value="AIzaSyCDabyMbAGESJzhzvPSb-mVx2eQOinJtHs" />
+
 
         <activity android:name=".CrearViajeActivity2"></activity>
     </application>
