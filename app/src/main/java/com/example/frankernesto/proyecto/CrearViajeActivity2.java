@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
@@ -36,6 +37,8 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private final String API_KEY = "AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898";
 
     private ImageView imagen;
+    private TextView nombre;
+
     private String respuesta = null;
 
     URLServicio servicio;
@@ -58,14 +61,10 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         Nom = intent.getStringExtra("NOMBRE");
 
         imagen = findViewById(R.id.imageView2);
+        nombre = findViewById(R.id.textView);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowHomeEnabled(false);
-        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.cast_intro_overlay_background_color)));
-        actionBar.setTitle(Nom);
-        actionBar.show();
+        nombre.setText(Nom);
+        nombre.setTextColor(Color.WHITE);
 
         // ESTO NO SE PUEDE QUEDAR ASI (estas dos lineas hay q arreglarlas)
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();

@@ -17,10 +17,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+
+
+        <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".ViajesActivity" />
         <activity android:name=".CrearViajeActivity" />
-        <activity android:name=".CrearViajeActivity2"/>
+        <activity android:name=".CrearViajeActivity2" android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
