@@ -5,6 +5,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -20,6 +21,7 @@ public class CrearViajeActivity extends AppCompatActivity {
 
   private DrawerLayout mDrawerLayout;
   private ActionBarDrawerToggle mToogle;
+  private Toolbar mToolBar;
 
 
     @Override
@@ -36,6 +38,9 @@ public class CrearViajeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_viaje);
         setTitle("INICIO");
+
+        mToolBar = (Toolbar) findViewById(R.id.nav_action);
+        setSupportActionBar(mToolBar);
 
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
