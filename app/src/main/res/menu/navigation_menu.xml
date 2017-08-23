@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+   <item android:id="@+id/nav_inicio"
+         android:title="Inicio"
+       ></item>
+
+    <item android:id="@+id/nav_fav"
+        android:title="Favoritos"
+        ></item>
+
+    <item android:id="@+id/nav_listaD"
+        android:title="Carrito de Compra"
+        ></item>
+
+    <item android:id="@+id/nav_reserv"
+        android:title="Reservas"
+        ></item>
+
+    <item android:id="@+id/nav_opc"
+        android:title="Opciones"
+        ></item>
+
+    <item android:id="@+id/nav_salir"
+        android:title="Salir"
+        ></item>
+
+</menu>

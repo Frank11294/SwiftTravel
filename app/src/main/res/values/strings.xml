@@ -4,4 +4,6 @@
     <string name="ERROR_EMAIL_INVALIDO">La direccion de correo es incorrecta</string>
     <string name="ERROR_USUARIO_EXISTE">Este usuario ya esta en uso</string>
     <string name="title_activity_crear_viaje">CrearViajeActivity</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>

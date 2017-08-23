@@ -22,7 +22,7 @@
         <activity android:name=".LoginActivity" android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ViajesActivity" />
-        <activity android:name=".CrearViajeActivity" />
+        <activity android:name=".CrearViajeActivity"  />
         <activity android:name=".CrearViajeActivity2" android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
