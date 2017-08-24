@@ -1,44 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="140dp"
     android:background="@color/colorPrimary"
-    android:padding="25dp">
-
-    <ImageView
-        android:id="@+id/img_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_perm_identity_black_24dp"
-        android:minHeight="52dp"
-        android:minWidth="52dp"
-        android:layout_above="@+id/nom_header" />
-
+    android:padding="20dp">
 
     <TextView
-        android:id="@+id/nom_header"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre"
-        android:textColor="#ffffff"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_above="@+id/email_header"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:id="@+id/email_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textColor="#ffffff"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp" />
-
+        android:layout_alignParentTop="true"
+        android:text="Aqui va el nombre y el correo del user "
+        android:textColor="#ffffff"
+        android:textSize="23sp"
+        android:textStyle="bold" />
 </RelativeLayout>

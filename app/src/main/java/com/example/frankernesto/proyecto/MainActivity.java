@@ -33,11 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button registrar;
     private EditText editTextMail;
     private EditText editTextPassword;
-    private EditText nombreUsuario;
     private TextView textViewSignin;
+
     private ProgressDialog barraDialogo;
     private FirebaseAuth firebaseAuth;
-    private String name;
 
 
     @Override
@@ -51,14 +50,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseAuth.getCurrentUser() != null ){
             finish();
-            startActivity(new Intent(getApplicationContext(),CrearViajeActivity.class));
+            startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
         }
 
         registrar=(Button)findViewById(R.id.registrar);
         editTextMail=(EditText)findViewById(R.id.editTextEmail);
         editTextPassword=(EditText)findViewById(R.id.editTextPassword);
         textViewSignin=(TextView)findViewById(R.id.TextViewRegistro);
-        nombreUsuario=(EditText)findViewById(R.id.editTextNom);
 
         registrar.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
@@ -73,14 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void registrarUsuario(){
         String email = editTextMail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
-         name=nombreUsuario.getText().toString().trim();
-
-        if(TextUtils.isEmpty(name)){
-
-            Toast.makeText(this,"Por favor introduzca su nombre de usuario",Toast.LENGTH_SHORT).show();
-
-            return;
-        }
 
         if(TextUtils.isEmpty(email)){
 
@@ -107,11 +97,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         barraDialogo.dismiss();
                          if(task.isSuccessful()){
                              Toast.makeText(MainActivity.this,"Usuario registrado",Toast.LENGTH_SHORT).show();
-                             Intent intent=new Intent(getApplicationContext(),CrearViajeActivity.class);
-                             intent.putExtra("Nombre",name);
                              barraDialogo.dismiss();
                              finish();
-                             startActivity(intent);
+                             startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
                          }else{
                              try{
                                  throw task.getException();

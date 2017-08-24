@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(firebaseAuth.getCurrentUser() != null ){
             finish();
-            startActivity(new Intent(getApplicationContext(),CrearViajeActivity.class));
+            startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
         }
 
         entrar=(Button)findViewById(R.id.Entrar);
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                      barraDialogo.dismiss();
                         if(task.isSuccessful()){
                           finish();
-                          startActivity(new Intent(getApplicationContext(),CrearViajeActivity.class));
+                          startActivity(new Intent(getApplicationContext(),ViajesActivity.class));
                         }else{
                             try{
                                 throw task.getException();
