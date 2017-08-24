@@ -20,6 +20,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -33,8 +34,14 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
+            style="@style/AppTabLayout"
+            app:tabTextAppearance="@style/AppTabTextAppearance"
+            android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="74dp"
+            app:tabIndicatorHeight="5dp"
+            app:tabIndicatorColor="#ffffff"
+            />
 
 
     </android.support.design.widget.AppBarLayout>

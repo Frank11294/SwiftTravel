@@ -1,11 +1,14 @@
 package com.example.frankernesto.proyecto;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +27,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +44,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+
 
 
     private final String TAG = "Mi App";
@@ -66,23 +72,27 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed__main_);
 
+
+
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager =  findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager.setCurrentItem(1,true);
+
 
         //Esto es lo del toolbar personalizado ese q cree------------------------------------------------------
 
         mToolBar = (Toolbar) findViewById(R.id.nav_action);
         setSupportActionBar(mToolBar);
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-//        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -240,7 +250,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -250,7 +259,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
                 case 0:
                     return "EXPLORAR";
                 case 1:
-                    return "CARRITO";
+                    return "VIAJES";
             }
             return null;
         }
