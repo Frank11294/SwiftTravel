@@ -5,8 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:theme="@style/Base.ThemeOverlay.AppCompat.Dark">
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="150dp"
+        >
+
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+
+
+
 
 
 </android.support.v7.widget.Toolbar>
