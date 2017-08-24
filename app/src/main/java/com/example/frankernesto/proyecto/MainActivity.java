@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(firebaseAuth.getCurrentUser() != null ){
             finish();
-            startActivity(new Intent(getApplicationContext(),CrearViajeActivity.class));
+            startActivity(new Intent(getApplicationContext(),Tabbed_Main_Activity.class));
         }
 
         registrar=(Button)findViewById(R.id.registrar);
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         barraDialogo.dismiss();
                          if(task.isSuccessful()){
                              Toast.makeText(MainActivity.this,"Usuario registrado",Toast.LENGTH_SHORT).show();
-                             Intent intent=new Intent(getApplicationContext(),CrearViajeActivity.class);
+                             Intent intent=new Intent(getApplicationContext(),Tabbed_Main_Activity.class);
                              intent.putExtra("Nombre",name);
                              barraDialogo.dismiss();
                              finish();
