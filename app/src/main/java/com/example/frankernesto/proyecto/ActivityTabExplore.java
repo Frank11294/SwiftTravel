@@ -37,6 +37,7 @@ public class ActivityTabExplore extends  Fragment {
          miLista = (ListView) rootView.findViewById(R.id.miLista);
 
 
+
         miLista.setAdapter(myAdapter);
 
         miLista.setOnItemClickListener(
