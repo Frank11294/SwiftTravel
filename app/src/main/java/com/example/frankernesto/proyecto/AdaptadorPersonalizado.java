@@ -71,6 +71,7 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
             holder.textPais=customView.findViewById(R.id.Pais);
             holder.imagen=customView.findViewById(R.id.imagen);
             customView.setTag(holder);
+            favBtn.setTag(position);
 
         }else{
             holder = (ViewHolder) customView.getTag();
@@ -94,14 +95,15 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     @Override
     public void onClick(View view) {
         ToggleButton fav = (ToggleButton) view;
-        if(!Checked[pos]) {
-            Toast.makeText(customView.getContext(),"ON in Posicion: "+pos,Toast.LENGTH_SHORT).show();
+        int position=(Integer) fav.getTag();
+        if(!Checked[position]) {
+            Toast.makeText(customView.getContext(),"ON in Posicion: "+position,Toast.LENGTH_SHORT).show();
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like));
-            Checked[pos]=true;
+            Checked[position]=true;
         } else {
-            Toast.makeText(customView.getContext(),"OFF in Posicion: "+pos,Toast.LENGTH_SHORT).show();
+            Toast.makeText(customView.getContext(),"OFF in Posicion: "+position,Toast.LENGTH_SHORT).show();
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike));
-            Checked[pos] = false;
+            Checked[position] = false;
         }
 
     }
