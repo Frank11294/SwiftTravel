@@ -57,15 +57,16 @@
             android:layout_weight="2">
 
             <ToggleButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:id="@+id/myToggleButton"
                 android:layout_gravity="right"
                 android:textOn=""
                 android:textOff=""
                 android:layout_below="@+id/imagen"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="32dp" />
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="9dp" />
 
         </LinearLayout>
     </LinearLayout>

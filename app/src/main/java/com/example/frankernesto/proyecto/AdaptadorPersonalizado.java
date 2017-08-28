@@ -1,18 +1,16 @@
 package com.example.frankernesto.proyecto;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -32,7 +30,7 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     private int [] _imagenes;
     private Boolean [] Checked ={false,false,false,false};
     private ViewHolder holder=null;
-    private  int pos=0;
+    private SharedPreferences prefs;
 
     private ArrayList mToggles;
 
@@ -55,23 +53,37 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        customView = convertView;
-        if(customView == null){
 
-            pos=position;
+        customView = convertView;
+
+        if(customView == null){
 
             customView = inflater.inflate(R.layout.custom_row,parent,false);
             holder=new ViewHolder();
 
+
+
             ToggleButton favBtn = customView.findViewById(R.id.myToggleButton);
-            favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike));
+            favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             favBtn.setOnClickListener(this);
+
 
             holder.textCiudad=customView.findViewById(R.id.Ciudad);
             holder.textPais=customView.findViewById(R.id.Pais);
             holder.imagen=customView.findViewById(R.id.imagen);
+
             customView.setTag(holder);
             favBtn.setTag(position);
+
+            prefs = PreferenceManager.getDefaultSharedPreferences(customView.getContext());
+            boolean aux=prefs.getBoolean("Checked",Checked[position]);
+            if(aux) {
+                favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
+            } else {
+                favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
+                Checked[position] = false;
+            }
+
 
         }else{
             holder = (ViewHolder) customView.getTag();
@@ -95,15 +107,24 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     @Override
     public void onClick(View view) {
         ToggleButton fav = (ToggleButton) view;
+
+
         int position=(Integer) fav.getTag();
+
+
         if(!Checked[position]) {
             Toast.makeText(customView.getContext(),"ON in Posicion: "+position,Toast.LENGTH_SHORT).show();
-            fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like));
+            fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
             Checked[position]=true;
+
+            prefs.edit().putBoolean("Checked", Checked[position]).apply();
+
         } else {
             Toast.makeText(customView.getContext(),"OFF in Posicion: "+position,Toast.LENGTH_SHORT).show();
-            fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike));
+            fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             Checked[position] = false;
+
+            prefs.edit().putBoolean("Checked", Checked[position]).apply();
         }
 
     }

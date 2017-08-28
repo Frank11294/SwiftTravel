@@ -1,11 +1,20 @@
 package com.example.frankernesto.proyecto;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.app.Fragment;
@@ -17,6 +26,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.common.api.Status;
@@ -26,13 +36,17 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class Tabbed_Main_Activity extends AppCompatActivity {
 
+    private static final int REQUEST_CAMERA = 1;
+    private static final int SELECT_FILE = 2;
+    private static int PROFILE_PIC_COUNT=0;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-
+    private ImageButton img_header;
 
     private final String TAG = "Mi App";
     private Intent intent;
@@ -98,6 +112,9 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
         emailUsuario = (TextView)header_View.findViewById(R.id.email_header);
         nomUsuario = (TextView)header_View.findViewById(R.id.nom_header);
+        img_header = (ImageButton)header_View.findViewById(R.id.img_header);
+
+
 
         //Aqui empieza el rollo este de firebase---------------------------------------------------------------
 
@@ -112,7 +129,40 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
         //Aqui termina
 
-         emailUsuario.setText(user.getEmail());
+        emailUsuario.setText(user.getEmail());
+        // Esto es para la imagen
+
+
+        final CharSequence[] items = {"Hacer Foto", "Fotos de la galeria", "Cancelar"};
+
+        final AlertDialog.Builder constructor = new AlertDialog.Builder(this);
+        constructor.setTitle("Añadir Foto!");
+        constructor.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+                if (items[item].equals("Hacer Foto")) {
+                    PROFILE_PIC_COUNT = 1;
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (items[item].equals("Fotos de la galeria")) {
+                    PROFILE_PIC_COUNT = 1;
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent,SELECT_FILE);
+                } else if (items[item].equals("Cancelar")) {
+                    PROFILE_PIC_COUNT = 0;
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        img_header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                constructor.show();
+            }
+        });
+
+
 
         //Esto es para despues cuando tengo hecha la base de datos
 
@@ -189,6 +239,31 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent_imagen) {
+        super.onActivityResult(requestCode, resultCode, intent_imagen);
+        switch(requestCode) {
+            case 0:
+                if(resultCode == RESULT_OK){
+                    setFoto(intent_imagen);
+                }
+
+                break;
+            case 1:
+                if(resultCode == RESULT_OK){
+                   setFoto(intent_imagen);
+                }
+                break;
+        }
+    }
+
+    private void setFoto(Intent intent_imagen) {
+        Bitmap foto;
+        foto=getCroppedBitmap(Bitmap.createScaledBitmap((Bitmap)intent_imagen.getExtras().get("data"), 190, 165, true));
+        img_header.setImageBitmap(null);
+        img_header.setForeground(null);
+        img_header.setImageBitmap(foto);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -258,6 +333,28 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         autocompleteFragment.setText("");
+    }
+
+    public Bitmap getCroppedBitmap(Bitmap bitmap) {
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+                bitmap.getWidth() / 2, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
+        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+        //return _bmp;
+        return output;
     }
 
 }
