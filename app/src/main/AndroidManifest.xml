@@ -32,8 +32,7 @@
         <activity android:name=".Tabbed_Main_Activity"/>
 
         <activity
-            android:name=".CrearViajeActivity2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".CrearViajeActivity2" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -74,8 +74,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_tabbed__main_);
 
 
-
-
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 
@@ -86,8 +84,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1,true);
-
-
 
 
         //Esto es lo del toolbar personalizado ese q cree------------------------------------------------------
@@ -261,7 +257,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         Bitmap foto;
         foto=getCroppedBitmap(Bitmap.createScaledBitmap((Bitmap)intent_imagen.getExtras().get("data"), 190, 165, true));
         img_header.setImageBitmap(null);
-        img_header.setForeground(null);
+//        img_header.setForeground(null);
         img_header.setImageBitmap(foto);
     }
 

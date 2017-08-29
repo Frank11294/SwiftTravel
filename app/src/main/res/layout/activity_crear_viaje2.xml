@@ -1,94 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="3"
-    android:background="@color/colorPrimaryDark"
-    tools:context="com.example.frankernesto.proyecto.CrearViajeActivity2">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
-
-         <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager_fotos"
-             android:layout_height="match_parent"
-             android:layout_width="match_parent">
-         </android.support.v4.view.ViewPager>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"
-            />
-
-
-    </RelativeLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.frankernesto.proyecto.CrearViajeActivity2"
+    android:id="@+id/drawer_layout_2"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_weight="1"
-        android:background="@color/colorPrimaryDark"
-        >
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp" />
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="¿Nombre del Viaje?"
-                android:inputType="textPersonName" />
-
-
-        </LinearLayout>
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:layout_weight="2">
 
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
+            <include layout="@layout/navigation_action_travel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Atras"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/include">
+            </include>
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager_fotos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/include">
+            </android.support.v4.view.ViewPager>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crear Viaje"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp" />
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/colorPrimaryDark">
+
+            <EditText
+                android:id="@+id/editText"
+                android:drawableLeft="@drawable/viaje"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:hint="¿Nombre del Viaje?"
+                android:inputType="textPersonName"
+                android:gravity="center|bottom"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="9dp"
+                android:text="Crear Viaje" />
+
+            <EditText
+                android:id="@+id/fecha_entrada"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/button"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="44dp"
+                android:layout_marginStart="60dp"
+                android:drawableRight="@drawable/fecha"
+                android:ems="6"
+                android:inputType="date"
+                android:onClick="mostrarCalendario" />
+
+            <EditText
+                android:id="@+id/fecha_salida"
+                android:drawableRight="@drawable/fecha"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:ems="6"
+                android:inputType="date"
+                android:layout_alignBaseline="@+id/fecha_entrada"
+                android:layout_alignBottom="@+id/fecha_entrada"
+                android:layout_toEndOf="@+id/fecha_entrada" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view_2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/navigation_menu"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        >
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
