@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -65,7 +66,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private static final int TIPO_DIALOGO=0;
     private static DatePickerDialog.OnDateSetListener oyenteSelectorFecha;
 
-
+    private NavigationView navigationView;
 
 
     public CrearViajeActivity2()  {
@@ -91,6 +92,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        navigationView  = (NavigationView) findViewById(R.id.nav_view_2);
         fechaIn=findViewById(R.id.fecha_entrada);
         fechaOut=findViewById(R.id.fecha_salida);
         nombreCiudad=findViewById(R.id.nombre_ciudad);
@@ -217,6 +219,35 @@ public class CrearViajeActivity2 extends AppCompatActivity {
             }
         });
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id=item.getItemId();
+                switch (id){
+                    case R.id.nav_salir:
+                        finish();
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        break;
+                    case R.id.nav_fav:
+                        Toast.makeText(getApplicationContext(),"Favoritos",Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.nav_reserv:
+                        Toast.makeText(getApplicationContext(),"Reservas",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_opc:
+                        Toast.makeText(getApplicationContext(),"Opciones",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_inicio:
+                         startActivity(new Intent(getApplicationContext(),Tabbed_Main_Activity.class));
+                        break;
+                    case R.id.nav_listaD:
+                        Toast.makeText(getApplicationContext(),"Lista de compra",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
 
