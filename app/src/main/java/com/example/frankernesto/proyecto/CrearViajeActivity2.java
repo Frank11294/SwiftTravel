@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,19 +33,19 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
     private String TAG="URL ERROR >>> : ";
     private Intent intent;
-
     private String Placeid, Nom,imagenUrl;
     private TextView nombreLoc;
     private final String API_KEY = "AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898";
-
     private ImageView imagen;
     private TextView nombre;
-
     private String respuesta = null;
-
     URLServicio servicio;
     private ProgressDialog barraDialogo;
     private ArrayList<String> fotosR;
+    private Bitmap [] Fotos_Lugares;
+
+    private ViewPager viewPager;
+    private AdaptadorPersonalizado_Swipe adaptador;
 
 
     public CrearViajeActivity2()  {
@@ -60,11 +62,8 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         Placeid = intent.getStringExtra("PlaceID");
         Nom = intent.getStringExtra("NOMBRE");
 
-        imagen = findViewById(R.id.imageView2);
-        nombre = findViewById(R.id.textView);
-
-        nombre.setText(Nom);
-        nombre.setTextColor(Color.WHITE);
+//        nombre.setText(Nom);
+//        nombre.setTextColor(Color.WHITE);
 
         // ESTO NO SE PUEDE QUEDAR ASI (estas dos lineas hay q arreglarlas)
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -92,7 +91,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                 JSONArray photos = jsonObjResult.getJSONArray("photos");
 
 
-                for (int i = 0; i < photos.length(); i++) {
+                for (int i = 0; i < 4; i++) {
 
                     JSONObject c = photos.getJSONObject(i);
 
@@ -119,17 +118,35 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
 //          AQUI ES DONDE HAGO LA CONSULTA A GOOGLE PLACE PHOTOS
 
-        imagenUrl =String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%s&key=%s",fotosR.get(0),API_KEY);
-        try{
-            URL url2 = new URL(imagenUrl);
-            Bitmap bmp = BitmapFactory.decodeStream(url2.openConnection().getInputStream());
-            imagen.setImageBitmap(bmp);
-        }catch(MalformedURLException ex){
 
-        }catch(IOException ex){
+         Fotos_Lugares = new Bitmap [fotosR.size()];
+
+        for (int i=0;i<fotosR.size();i++){
+            imagenUrl =String.format("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=%s&key=%s",fotosR.get(i),API_KEY);
+            URL url = null;
+            try {
+                url = new URL(imagenUrl);
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                Fotos_Lugares[i]=bmp;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
         }
+
+        viewPager=(ViewPager)findViewById(R.id.view_pager_fotos);
+        adaptador = new AdaptadorPersonalizado_Swipe(this,Fotos_Lugares);
+        viewPager.setAdapter(adaptador);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager, true);
+
     }
+
+
 }
 
 

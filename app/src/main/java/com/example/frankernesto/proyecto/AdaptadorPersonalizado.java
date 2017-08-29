@@ -113,14 +113,12 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
 
 
         if(!Checked[position]) {
-            Toast.makeText(customView.getContext(),"ON in Posicion: "+position,Toast.LENGTH_SHORT).show();
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
             Checked[position]=true;
 
             prefs.edit().putBoolean("Checked", Checked[position]).apply();
 
         } else {
-            Toast.makeText(customView.getContext(),"OFF in Posicion: "+position,Toast.LENGTH_SHORT).show();
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             Checked[position] = false;
 
