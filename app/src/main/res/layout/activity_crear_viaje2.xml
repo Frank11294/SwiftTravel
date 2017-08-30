@@ -73,27 +73,31 @@
 
             <EditText
                 android:id="@+id/fecha_entrada"
+                android:hint="Check in"
                 android:focusable="false"
                 android:clickable="true"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/button"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="44dp"
                 android:layout_marginStart="60dp"
-                android:drawableRight="@drawable/fecha"
+                android:drawableLeft="@drawable/fecha"
                 android:ems="6"
                 android:inputType="date"
                 android:onClick="mostrarCalendario" />
 
             <EditText
                 android:id="@+id/fecha_salida"
-                android:drawableRight="@drawable/fecha"
+                android:drawableLeft="@drawable/fecha"
                 android:focusable="false"
                 android:clickable="true"
+                android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:hint="Check out"
                 android:ems="6"
                 android:inputType="date"
                 android:layout_alignBaseline="@+id/fecha_entrada"

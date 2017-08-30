@@ -60,6 +60,8 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
     private NavigationView navigationView;
     private PlaceAutocompleteFragment autocompleteFragment;
 
+    private String Firebase_Nombre_User;
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -162,9 +164,10 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
         //Esto es para despues cuando tengo hecha la base de datos
 
-//        Intent intento=getIntent();
-//        String nomU=intento.getStringExtra("Nombre");
-//        nomUsuario.setText(nomU);
+        //
+        Intent intento=getIntent();
+        Firebase_Nombre_User=intento.getStringExtra("Nombre");
+
 
 
         //Esto es lo del autocomplete de google-----------------------------------------------------------------
@@ -255,9 +258,8 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
     private void setFoto(Intent intent_imagen) {
         Bitmap foto;
-        foto=getCroppedBitmap(Bitmap.createScaledBitmap((Bitmap)intent_imagen.getExtras().get("data"), 190, 165, true));
+        foto=getCircularBitmap(Bitmap.createScaledBitmap((Bitmap)intent_imagen.getExtras().get("data"), 350, 280, true));
         img_header.setImageBitmap(null);
-//        img_header.setForeground(null);
         img_header.setImageBitmap(foto);
     }
 
@@ -343,13 +345,43 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         paint.setAntiAlias(true);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(color);
-        // canvas.drawRoundRect(rectF, roundPx, roundPx, paint);
+
         canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
                 bitmap.getWidth() / 2, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
-        //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-        //return _bmp;
+
+        return output;
+    }
+    public static Bitmap getCircularBitmap(Bitmap bitmap) {
+        Bitmap output;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        } else {
+            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(output);
+
+        final int color = 0xff424242;
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+
+        float r = 0;
+
+        if (bitmap.getWidth() > bitmap.getHeight()) {
+            r = bitmap.getHeight() / 2;
+        } else {
+            r = bitmap.getWidth() / 2;
+        }
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        paint.setColor(color);
+        canvas.drawCircle(r, r, r, paint);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
     }
 

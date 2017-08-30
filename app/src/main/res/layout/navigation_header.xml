@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nav_header"
     android:layout_width="match_parent"
     android:layout_height="170dp"
-    android:background="@color/colorAccent"
-    android:padding="25dp">
+    android:orientation="vertical"
+    android:background="@color/colorAccent">
     <!---->
 
-    <ImageButton
+
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/img_header"
-        android:minHeight="92dp"
-        android:minWidth="62dp"
-        android:scaleType="centerCrop"
-        android:foreground="@mipmap/ic_perm_identity_black_24dp"
+        android:minHeight="65dp"
+        android:minWidth="65dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/boton_redondo"
-        android:layout_above="@+id/nom_header"
-        android:layout_alignEnd="@+id/nom_header"
-        android:layout_marginBottom="15dp" />
+        android:layout_marginBottom="10dp"
+        android:id="@+id/frameLayout3"
+        android:layout_marginStart="30dp">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/img_header"
+            android:layout_gravity="center"
+            android:background="@mipmap/ic_perm_identity_black_24dp"/>
+
+    </FrameLayout>
 
 
     <TextView
@@ -30,9 +37,9 @@
         android:textColor="#ffffff"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:layout_above="@+id/email_header"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="7dp"
+ />
 
     <TextView
         android:id="@+id/email_header"
@@ -40,12 +47,10 @@
         android:layout_height="wrap_content"
         android:text="Email"
         android:textColor="#ffffff"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginLeft="32dp"
+        android:layout_marginBottom="19dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>

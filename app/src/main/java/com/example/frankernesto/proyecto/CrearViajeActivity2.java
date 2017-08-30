@@ -6,15 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,9 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.GeoDataApi;
-import com.google.android.gms.maps.GoogleMap;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,9 +57,9 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private AdaptadorPersonalizado_Swipe adaptador;
 
     private EditText fechaIn,fechaOut;
-    private int anno,mes,dia;
-    private static final int TIPO_DIALOGO=0;
-    private static DatePickerDialog.OnDateSetListener oyenteSelectorFecha;
+    private int anno_in, mes_in, dia_in,anno_out,mes_out,dia_out;
+    private static  int TIPO_DIALOGO=0;
+    private static DatePickerDialog.OnDateSetListener oyenteSelectorFecha_IN,oyenteSelectorFecha_OUT;
 
     private NavigationView navigationView;
 
@@ -190,18 +185,31 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
         Calendar calendario =Calendar.getInstance();
 
-        anno=calendario.get(Calendar.YEAR);
-        mes=calendario.get(Calendar.MONTH);
-        dia=calendario.get(Calendar.DAY_OF_MONTH);
+        anno_in =calendario.get(Calendar.YEAR);
+        mes_in =calendario.get(Calendar.MONTH);
+        dia_in =calendario.get(Calendar.DAY_OF_MONTH);
 
-        mostrarFecha();
-        oyenteSelectorFecha =new DatePickerDialog.OnDateSetListener(){
+        anno_out =calendario.get(Calendar.YEAR);
+        mes_out =calendario.get(Calendar.MONTH);
+        dia_out =calendario.get(Calendar.DAY_OF_MONTH);
+
+        oyenteSelectorFecha_IN =new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                anno=year;
-                mes=month;
-                dia=day;
-                mostrarFecha();
+                anno_in =year;
+                mes_in =month;
+                dia_in =day;
+                fechaIn.setHint(anno_in +"/"+ mes_in +"/"+ dia_in);
+            }
+        };
+
+        oyenteSelectorFecha_OUT =new DatePickerDialog.OnDateSetListener(){
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                anno_out =year;
+                mes_out =month;
+                dia_out =day;
+                fechaOut.setHint(anno_out +"/"+ mes_out +"/"+ dia_out);
             }
         };
 
@@ -209,12 +217,14 @@ public class CrearViajeActivity2 extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                mostrarCalendario(view);
+
            }
        });
 
         fechaOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TIPO_DIALOGO=1;
                 mostrarCalendario(view);
             }
         });
@@ -252,12 +262,6 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     }
 
 
-    public void mostrarFecha(){
-        fechaIn.setHint(anno+"/"+mes+"/"+dia);
-        fechaOut.setHint(anno+"/"+mes+"/"+dia);
-    }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(mToogle.onOptionsItemSelected(item)){
@@ -273,7 +277,10 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id){
             case 0:
-            return new DatePickerDialog(this,oyenteSelectorFecha,anno,mes,dia);
+                return new DatePickerDialog(this, oyenteSelectorFecha_IN, anno_in, mes_in, dia_in);
+            case 1:
+                return new DatePickerDialog(this, oyenteSelectorFecha_OUT, anno_out, mes_out, dia_out);
+
         }
         return null;
     }
