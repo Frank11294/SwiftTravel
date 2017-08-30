@@ -63,7 +63,7 @@
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/crearViaje"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/button"
+                android:layout_above="@+id/crearViaje"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="44dp"
                 android:layout_marginStart="60dp"

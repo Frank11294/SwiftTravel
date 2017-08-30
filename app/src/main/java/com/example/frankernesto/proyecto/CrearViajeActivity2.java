@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,7 +53,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
-
+    private Button CrearViaje;
     private ViewPager viewPager;
     private AdaptadorPersonalizado_Swipe adaptador;
 
@@ -74,6 +75,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_crear_viaje2);
 
 
+        CrearViaje=findViewById(R.id.crearViaje);
         mToolBar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(mToolBar);
 
@@ -193,7 +195,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         mes_out =calendario.get(Calendar.MONTH);
         dia_out =calendario.get(Calendar.DAY_OF_MONTH);
 
-        oyenteSelectorFecha_IN =new DatePickerDialog.OnDateSetListener(){
+        oyenteSelectorFecha_IN = new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 anno_in =year;
@@ -203,7 +205,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
             }
         };
 
-        oyenteSelectorFecha_OUT =new DatePickerDialog.OnDateSetListener(){
+        oyenteSelectorFecha_OUT = new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 anno_out =year;
@@ -216,6 +218,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
        fechaIn.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
+               TIPO_DIALOGO=0;
                mostrarCalendario(view);
 
            }
@@ -256,6 +259,14 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                         break;
                 }
                 return false;
+            }
+        });
+
+
+        CrearViaje.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class));
             }
         });
 

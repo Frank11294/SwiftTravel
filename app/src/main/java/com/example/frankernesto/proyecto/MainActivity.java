@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText nombreUsuario;
     private TextView textViewSignin;
     private ProgressDialog barraDialogo;
+
     private FirebaseAuth firebaseAuth;
     private String name;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void registrarUsuario(){
         String email = editTextMail.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
-         name=nombreUsuario.getText().toString().trim();
+        name=nombreUsuario.getText().toString().trim();
 
         if(TextUtils.isEmpty(name)){
 

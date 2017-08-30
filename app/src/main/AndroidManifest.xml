@@ -3,9 +3,6 @@
     package="com.example.frankernesto.proyecto">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -24,21 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".Tabbed_Main_Activity"/>
-
-        <activity
-            android:name=".CrearViajeActivity2" />
+        <activity android:name=".Tabbed_Main_Activity" />
+        <activity android:name=".CrearViajeActivity2" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898" />
 
-
+        <activity
+            android:name=".Tabbed_Secondary_Activity"
+            android:label="@string/title_activity_tabbed__secondary_"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
