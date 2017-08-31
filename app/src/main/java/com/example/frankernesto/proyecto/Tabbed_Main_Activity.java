@@ -173,11 +173,14 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
 
 
-        mStorage.child("/Photos/Profile/default.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        mStorage.child("/Photos/Profile/"+user.getUid().substring(4)+"-default.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                img_header.setImageBitmap(bitmap);
+                Glide.with(Tabbed_Main_Activity.this)
+                        .asBitmap()
+                        .apply(RequestOptions.centerCropTransform())
+                        .load(bytes)
+                        .into(img_header);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -321,7 +324,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         Progreso.show();
 
         Uri selectedImage = intent_imagen.getData();
-        StorageReference filePath=mStorage.child("Photos").child("Profile").child("default.jpg");
+        StorageReference filePath=mStorage.child("Photos").child("Profile").child(user.getUid().substring(4)+"-default.jpg");
 
         filePath.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

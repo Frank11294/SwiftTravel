@@ -6,23 +6,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="5"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/background_2"
     tools:context="com.example.frankernesto.proyecto.MainActivity">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_weight="0.74"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            app:srcCompat="@drawable/imagen"/>
+            android:layout_width="215dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/logo_1"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/imageView" />
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/travel"
+            android:layout_marginTop="26dp"
+            android:layout_alignTop="@+id/imageView"
+            android:layout_toEndOf="@+id/imageView" />
+
+    </RelativeLayout>
 
     <LinearLayout
 
@@ -32,15 +45,22 @@
         android:layout_height="449dp"
         android:orientation="vertical">
 
-        <android.support.v4.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="12dp" />
+<android.support.v4.widget.Space
+    android:layout_width="15dp"
+    android:layout_height="65dp" />
 
         <EditText
             android:layout_margin="15dp"
+            android:drawableLeft="@drawable/user"
+            android:paddingLeft="22dp"
             android:inputType="textPersonName"
-            android:hint="Introduzca su nombre de usuario"
+            android:minHeight="50dp"
+            android:textColor="#778BB0"
+            android:textColorHint="#778BB0"
+            android:textSize="14sp"
+            android:drawablePadding="10dp"
+            android:hint="Nombre de usuario"
+            android:background="@drawable/button_effect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextNom"
@@ -48,8 +68,16 @@
 
         <EditText
             android:layout_margin="15dp"
+            android:textColorHint="#778BB0"
+            android:drawableLeft="@drawable/email"
+            android:paddingLeft="22dp"
+            android:textColor="#778BB0"
+            android:drawablePadding="10dp"
+            android:background="@drawable/button_effect"
+            android:minHeight="50dp"
+            android:textSize="14sp"
             android:inputType="textEmailAddress"
-            android:hint="Introduzca su correo"
+            android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editTextEmail"
@@ -59,14 +87,23 @@
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/lock"
+            android:paddingLeft="22dp"
+            android:drawablePadding="10dp"
+            android:textColor="#778BB0"
+            android:textColorHint="#778BB0"
+            android:textSize="14sp"
+            android:background="@drawable/button_effect"
+            android:minHeight="50dp"
             android:layout_margin="15dp"
-            android:hint="Introduzca su contraseña"
+            android:hint="Contraseña"
             android:inputType="textPassword" />
 
         <Button
-            android:layout_margin="70dp"
+            android:layout_margin="30dp"
             android:id="@+id/registrar"
             android:text="Registrarse"
+            android:background="#2196f3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
