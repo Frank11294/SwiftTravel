@@ -1,13 +1,17 @@
 package com.example.frankernesto.proyecto;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -27,26 +31,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 
 public class Tabbed_Main_Activity extends AppCompatActivity {
 
-    private static final int REQUEST_CAMERA = 1;
-    private static final int SELECT_FILE = 2;
+    private static final int REQUEST_CAMERA = 1888;
+    private static final int SELECT_FILE = 2888;
     private static int PROFILE_PIC_COUNT=0;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-    private ImageButton img_header;
+    private ImageView img_header;
 
     private final String TAG = "Mi App";
     private Intent intent;
@@ -55,19 +75,31 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
     private ActionBarDrawerToggle mToogle;
     private Toolbar mToolBar;
 
-    private FirebaseAuth firebaseAuth;
+
     private TextView emailUsuario,nomUsuario;
     private NavigationView navigationView;
     private PlaceAutocompleteFragment autocompleteFragment;
+    private CharSequence[] items;
 
-    private String Firebase_Nombre_User;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
+    private StorageReference mStorage;
+    private ProgressDialog Progreso;
 
+    private  AlertDialog.Builder constructor;
+
+    private Uri path_foto_user;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mToogle.syncState();
+
+
     }
+
+
+
 
 
     @Override
@@ -106,50 +138,82 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
        // Esto es solo para para poner nombre y email en el header
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        View header_View = navigationView.getHeaderView(0);
+        final View header_View = navigationView.getHeaderView(0);
 
         emailUsuario = (TextView)header_View.findViewById(R.id.email_header);
         nomUsuario = (TextView)header_View.findViewById(R.id.nom_header);
-        img_header = (ImageButton)header_View.findViewById(R.id.img_header);
+        img_header = (ImageView)header_View.findViewById(R.id.img_header);
 
 
 
         //Aqui empieza el rollo este de firebase---------------------------------------------------------------
 
+        Progreso=new ProgressDialog(this);
+
         firebaseAuth =  FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
 
         if(firebaseAuth.getCurrentUser() == null){
             finish();
             startActivity(new Intent(this,LoginActivity.class));
         }
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        user = firebaseAuth.getCurrentUser();
 
-        //Aqui termina
 
-        emailUsuario.setText(user.getEmail());
+        String nombreUsuario=user.getDisplayName();
+        String email=user.getEmail();
+
+        emailUsuario.setText(email);
+
+
+        if(nombreUsuario!=null){
+            nomUsuario.setText(user.getDisplayName().toUpperCase());
+        }
+
+
+
+        mStorage.child("/Photos/Profile/default.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                img_header.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
         // Esto es para la imagen
 
 
-        final CharSequence[] items = {"Hacer Foto", "Fotos de la galeria", "Cancelar"};
+        items = new CharSequence[]{"Hacer Foto", "Fotos de la galeria", "Cancelar"};
 
-        final AlertDialog.Builder constructor = new AlertDialog.Builder(this);
+        constructor = new AlertDialog.Builder(this);
         constructor.setTitle("Añadir Foto!");
+
         constructor.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
+
                 if (items[item].equals("Hacer Foto")) {
-                    PROFILE_PIC_COUNT = 1;
+
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
-                } else if (items[item].equals("Fotos de la galeria")) {
-                    PROFILE_PIC_COUNT = 1;
+                    startActivityForResult(intent, 0);
+
+                }
+                if (items[item].equals("Fotos de la galeria")) {
+
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent,SELECT_FILE);
-                } else if (items[item].equals("Cancelar")) {
-                    PROFILE_PIC_COUNT = 0;
+                    startActivityForResult(intent,1);
+
+                }
+                if (items[item].equals("Cancelar")) {
                     dialog.dismiss();
                 }
+
             }
         });
 
@@ -160,13 +224,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
             }
         });
 
-
-
-        //Esto es para despues cuando tengo hecha la base de datos
-
-        //
-        Intent intento=getIntent();
-        Firebase_Nombre_User=intento.getStringExtra("Nombre");
 
 
 
@@ -196,7 +253,10 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Reservas",Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.nav_opc:
-                        Toast.makeText(getApplicationContext(),"Opciones",Toast.LENGTH_SHORT).show();
+                        String nombreUsuario=user.getDisplayName();
+                        if(nombreUsuario!=null){
+                            nomUsuario.setText(user.getDisplayName().toUpperCase());
+                        }
                         break;
                     case R.id.nav_inicio:
                         Toast.makeText(getApplicationContext(),"Inicio",Toast.LENGTH_SHORT).show();
@@ -244,24 +304,54 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         switch(requestCode) {
             case 0:
                 if(resultCode == RESULT_OK){
-                    setFoto(intent_imagen);
+                    setFotoCamara(intent_imagen);
                 }
 
                 break;
             case 1:
                 if(resultCode == RESULT_OK){
-                   setFoto(intent_imagen);
+                    setFotoGaleria(intent_imagen);
                 }
                 break;
         }
     }
 
-    private void setFoto(Intent intent_imagen) {
-        Bitmap foto;
-        foto=getCircularBitmap(Bitmap.createScaledBitmap((Bitmap)intent_imagen.getExtras().get("data"), 350, 280, true));
-        img_header.setImageBitmap(null);
-        img_header.setImageBitmap(foto);
+    private void setFotoGaleria(Intent intent_imagen)  {
+        Progreso.setMessage("Subiendo foto de Perfil...");
+        Progreso.show();
+
+        Uri selectedImage = intent_imagen.getData();
+        StorageReference filePath=mStorage.child("Photos").child("Profile").child("default.jpg");
+
+        filePath.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Progreso.dismiss();
+
+                Uri downloadUri = taskSnapshot.getDownloadUrl();
+
+                path_foto_user = downloadUri;
+
+                Glide.with(Tabbed_Main_Activity.this)
+                        .asBitmap()
+                        .apply(RequestOptions.centerCropTransform())
+                        .load(downloadUri)
+                        .into(img_header);
+
+                Toast.makeText(getApplicationContext(),"Foto subida con exito...",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+    private void setFotoCamara(Intent intent_imagen)  {
+
+        Bundle extras = intent_imagen.getExtras();
+        Bitmap imageBitmap = (Bitmap) extras.get("data");
+
+        img_header.setImageBitmap(imageBitmap);
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -333,56 +423,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         autocompleteFragment.setText("");
     }
 
-    public Bitmap getCroppedBitmap(Bitmap bitmap) {
-        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(output);
 
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-
-        canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-                bitmap.getWidth() / 2, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-
-        return output;
-    }
-    public static Bitmap getCircularBitmap(Bitmap bitmap) {
-        Bitmap output;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            output = Bitmap.createBitmap(bitmap.getHeight(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        } else {
-            output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getWidth(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(output);
-
-        final int color = 0xff424242;
-        final Paint paint = new Paint();
-        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        float r = 0;
-
-        if (bitmap.getWidth() > bitmap.getHeight()) {
-            r = bitmap.getHeight() / 2;
-        } else {
-            r = bitmap.getWidth() / 2;
-        }
-
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(color);
-        canvas.drawCircle(r, r, r, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        return output;
-    }
 
 }
