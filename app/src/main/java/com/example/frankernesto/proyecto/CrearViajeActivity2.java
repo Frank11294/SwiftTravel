@@ -100,7 +100,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         Placeid = intent.getStringExtra("PlaceID");
         Nom = intent.getStringExtra("NOMBRE");
 
-        nombreCiudad.setText(Nom);
+        nombreCiudad.setText(Nom.toUpperCase());
 
 
         // ESTO NO SE PUEDE QUEDAR ASI (estas dos lineas hay q arreglarlas)
