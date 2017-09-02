@@ -88,7 +88,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
     private  AlertDialog.Builder constructor;
 
-    private Uri path_foto_user;
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -110,14 +109,14 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-
+         // Al container se le pasa el adaptador de arriba que es el que pilla las pestañas
         mViewPager =  findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        mViewPager.setCurrentItem(1,true);
+        mViewPager.setCurrentItem(0,true);
 
 
         //Esto es lo del toolbar personalizado ese q cree------------------------------------------------------
@@ -332,8 +331,6 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
                 Progreso.dismiss();
 
                 Uri downloadUri = taskSnapshot.getDownloadUrl();
-
-                path_foto_user = downloadUri;
 
                 Glide.with(Tabbed_Main_Activity.this)
                         .asBitmap()

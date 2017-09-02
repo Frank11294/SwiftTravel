@@ -34,6 +34,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class CrearViajeActivity2 extends AppCompatActivity {
@@ -41,7 +42,6 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private String TAG="URL ERROR >>> : ";
     private Intent intent;
     private String Placeid, Nom,imagenUrl;
-    private TextView nombreLoc;
     private final String API_KEY = "AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898";
     private ImageView imagen;
     private TextView nombreCiudad;
@@ -61,6 +61,8 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private int anno_in, mes_in, dia_in,anno_out,mes_out,dia_out;
     private static  int TIPO_DIALOGO=0;
     private static DatePickerDialog.OnDateSetListener oyenteSelectorFecha_IN,oyenteSelectorFecha_OUT;
+    private Date fechaEntrada,fechaSalida;
+
 
     private NavigationView navigationView;
 
@@ -202,6 +204,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                 mes_in =month;
                 dia_in =day;
                 fechaIn.setHint(anno_in +"/"+ mes_in +"/"+ dia_in);
+                fechaEntrada = new Date(year,month,day);
             }
         };
 
@@ -212,6 +215,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                 mes_out =month;
                 dia_out =day;
                 fechaOut.setHint(anno_out +"/"+ mes_out +"/"+ dia_out);
+                fechaSalida = new Date(year,month,day);
             }
         };
 
@@ -263,10 +267,16 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         });
 
 
+        //Aqui paso los datos a firebase de en dia de entrada , el dia de salida y el nombre de la ciudad
         CrearViaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class));
+                Intent secondary_activity=new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class);
+                secondary_activity.putExtra("NombreLugar",Nom);
+                secondary_activity.putExtra("IdLugar",Placeid);
+                secondary_activity.putExtra("FechaIn",fechaEntrada);
+                secondary_activity.putExtra("FechaOut",fechaSalida);
+                startActivity(secondary_activity);
             }
         });
 

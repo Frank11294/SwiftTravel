@@ -31,9 +31,7 @@ public class ActivityTabExplore extends  Fragment {
 
         ListAdapter myAdapter = new AdaptadorPersonalizado(rootView.getContext(),cities,countries,imagenes);
 
-         miLista = (ListView) rootView.findViewById(R.id.miLista);
-
-
+        miLista = (ListView) rootView.findViewById(R.id.miLista);
 
         miLista.setAdapter(myAdapter);
 

@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth firebaseAuth;
 
-    private Usuarios usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String email = editTextMail.getText().toString().trim();
         String contraseña=editTextPassword.getText().toString().trim();
         final String name = editTextUser.getText().toString();
-
-         usuario=new Usuarios(email,contraseña);
 
         if(TextUtils.isEmpty(name)){
 

@@ -32,9 +32,9 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     private ViewHolder holder=null;
     private SharedPreferences prefs;
 
+
     private ArrayList mToggles;
 
-    HashMap<Integer,Boolean> toggleButtonSeguidorEstado ;
 
     AdaptadorPersonalizado(Context context, String[]ciudades,String[]paises,int [] imagenes){
 
@@ -47,6 +47,10 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
             _paises[i]=paises[i];
             _imagenes[i]=imagenes[i];
         }
+
+        HashMap bool = new HashMap<Integer,Boolean>();
+
+        bool.put("a",true);
     }
 
     @NonNull
@@ -115,13 +119,11 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
         if(!Checked[position]) {
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
             Checked[position]=true;
-
             prefs.edit().putBoolean("Checked", Checked[position]).apply();
 
         } else {
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             Checked[position] = false;
-
             prefs.edit().putBoolean("Checked", Checked[position]).apply();
         }
 

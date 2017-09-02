@@ -35,17 +35,16 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".Tabbed_Main_Activity" />
         <activity android:name=".CrearViajeActivity2" />
+        <activity android:name=".Tabbed_Secondary_Activity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBshUoGvYcxLkaJU_wgCzeGe3ek4E4h898" />
 
-        <activity
-            android:name=".Tabbed_Secondary_Activity"
-            android:label="@string/title_activity_tabbed__secondary_"
-            android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>

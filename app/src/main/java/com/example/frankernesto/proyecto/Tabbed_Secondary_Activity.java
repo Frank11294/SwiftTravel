@@ -1,46 +1,103 @@
 package com.example.frankernesto.proyecto;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Date;
 
 public class Tabbed_Secondary_Activity extends AppCompatActivity {
 
-
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
-
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToogle;
+    private NavigationView navigationView;
+    private SectionsPagerAdapter mSectionsPagerAdapter_secondary;
+    private ViewPager mViewPager_secondary;
+    private Intent getDatosCrearActivity;
+    private String idLugar,nomLugar;
+    private Date fechaIn,fechaOut;
+    private TextView city,date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed__secondary_);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.include);
         setSupportActionBar(toolbar);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //Menu
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_3);
+        mToogle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.open,R.string.close);
+        mDrawerLayout.addDrawerListener(mToogle);
+        mToogle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationView  = (NavigationView) findViewById(R.id.nav_view_3);
+        //Fin de menu
 
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        mSectionsPagerAdapter_secondary = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+
+        mViewPager_secondary = (ViewPager) findViewById(R.id.container_secondary);
+        mViewPager_secondary.setAdapter(mSectionsPagerAdapter_secondary);
+
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_secondary);
+        tabLayout.setupWithViewPager(mViewPager_secondary);
+
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            RelativeLayout relativeLayout = (RelativeLayout)
+                    LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_layout, tabLayout, false);
+            TextView tabTextView = (TextView) relativeLayout.findViewById(R.id.tab_title);
+            tabTextView.setText(tab.getText());
+            tab.setCustomView(relativeLayout);
+            tab.select();
+        }
+
+        getDatosCrearActivity = getIntent();
+        nomLugar=getDatosCrearActivity.getStringExtra("NombreLugar");
+        idLugar=getDatosCrearActivity.getStringExtra("IdLugar");
+        this.fechaIn=(Date)getDatosCrearActivity.getSerializableExtra("FechaIn");
+        this.fechaOut=(Date)getDatosCrearActivity.getSerializableExtra("FechaOut");
+
+        city=(TextView) findViewById(R.id.City);
+        date=(TextView) findViewById(R.id.Date);
+
+        String diaEntrada  = (String) DateFormat.format("dd",   fechaIn); // 20
+        String mesEntrada  = (String) DateFormat.format("MMM",  fechaIn); // Jun
+
+        String diaSalida  = (String) DateFormat.format("dd",   fechaOut); // 20
+        String mesSalida  = (String) DateFormat.format("MMM",  fechaOut); // Jun
+
+
+        city.setText(nomLugar.toUpperCase());
+        date.setText(diaEntrada+" "+mesEntrada+" - "+diaSalida+" "+mesSalida);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +105,36 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id=item.getItemId();
+                switch (id){
+                    case R.id.nav_salir:
+                        finish();
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        break;
+                    case R.id.nav_fav:
+                        Toast.makeText(getApplicationContext(),"Favoritos",Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.nav_reserv:
+                        Toast.makeText(getApplicationContext(),"Reservas",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_opc:
+                        Toast.makeText(getApplicationContext(),"Opciones",Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.nav_inicio:
+                        startActivity(new Intent(getApplicationContext(),Tabbed_Main_Activity.class));
+                        break;
+                    case R.id.nav_listaD:
+                        Toast.makeText(getApplicationContext(),"Lista de compra",Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
             }
         });
 
@@ -63,47 +150,19 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        if(mToogle.onOptionsItemSelected(item)){
+            return true;
+        }
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Toast.makeText(getApplicationContext(),"FUNCIONA",Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 
-    public static class PlaceholderFragment extends Fragment {
-
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.tab1_secondary_hoteles, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -112,26 +171,36 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+          switch (position){
+              case 0:
+                  return new ActivityTabHotels();
+              case 1:
+                  return new ActivityTabVuelos();
+              case 2:
+                  return new ActivityTabRenta();
+              case 3:
+                  return new AcitivityTabOcio();
+              default:
+                  return null;
+          }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "HOTELES";
                 case 1:
-                    return "SECTION 2";
+                    return "VUELOS";
                 case 2:
-                    return "SECTION 3";
+                    return "RENTA";
+                case 3:
+                    return "OCIO";
             }
             return null;
         }
