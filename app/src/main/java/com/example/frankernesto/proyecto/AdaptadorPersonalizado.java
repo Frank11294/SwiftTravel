@@ -140,7 +140,7 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
 
     public int getViewTypeCount() {
 
-        return getCount();
+        return 1;
     }
 
     @Override

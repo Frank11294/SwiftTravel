@@ -69,6 +69,8 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_secondary);
         tabLayout.setupWithViewPager(mViewPager_secondary);
 
+        mViewPager_secondary.setCurrentItem(0,true);
+
 
         for (int i = 0; i < tabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = tabLayout.getTabAt(i);
@@ -143,7 +145,6 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_tabbed__secondary_, menu);
         return true;
     }
@@ -173,13 +174,29 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
         public Fragment getItem(int position) {
           switch (position){
               case 0:
-                  return new ActivityTabHotels();
+                  ActivityTabHotels tab1= new ActivityTabHotels();
+                  Bundle bundle = new Bundle();
+                  bundle.putString("nomLugar",nomLugar);
+                  tab1.setArguments(bundle);
+                  return tab1;
               case 1:
-                  return new ActivityTabVuelos();
+                  ActivityTabVuelos tab2= new ActivityTabVuelos();
+//                  Bundle bundle2 = new Bundle();
+//                  bundle2.putString("idLugar",idLugar);
+//                  tab2.setArguments(bundle2);
+                  return tab2;
               case 2:
-                  return new ActivityTabRenta();
+                  ActivityTabRenta tab3= new ActivityTabRenta();
+//                  Bundle bundle3 = new Bundle();
+//                  bundle3.putString("idLugar",idLugar);
+//                  tab3.setArguments(bundle3);
+                  return tab3;
               case 3:
-                  return new AcitivityTabOcio();
+                  AcitivityTabOcio tab4= new AcitivityTabOcio();
+//                  Bundle bundle4 = new Bundle();
+//                  bundle4.putString("idLugar",idLugar);
+//                  tab4.setArguments(bundle4);
+                  return tab4;
               default:
                   return null;
           }
