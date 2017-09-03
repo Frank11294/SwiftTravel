@@ -78,7 +78,7 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
 
             String nombre_Hotel = getItem(position);
             float rate=_Rating.get(position);
-            Bitmap aux=_imagenesHoteles[0];
+            Bitmap aux=_imagenesHoteles[position];
 
             holder.textHotel.setText(nombre_Hotel);
             holder.ratingBar.setRating(rate);
