@@ -12,7 +12,7 @@
         android:layout_weight="4"
         >
         <ImageView
-            android:id="@+id/imagen_hotel"
+            android:id="@+id/imagen_nightClub"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,15 +26,15 @@
         android:orientation="horizontal"
         android:layout_weight="2">
 
-    <LinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_weight="1">
 
 
-        <TextView
-                android:id="@+id/nombre_hotel"
+            <TextView
+                android:id="@+id/nombre_nightClub"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="#000000"
@@ -51,7 +51,7 @@
             android:layout_weight="1">
 
             <RatingBar
-                android:id="@+id/ratingBar"
+                android:id="@+id/ratingBar_nightclub"
                 android:layout_width="281dp"
                 android:layout_height="50dp"
                 android:rating="5"

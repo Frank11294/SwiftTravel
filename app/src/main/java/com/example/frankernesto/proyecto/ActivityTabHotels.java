@@ -70,8 +70,8 @@ public class ActivityTabHotels extends Fragment {
 
                 for (int i=0;i<arrayResults.length();i++){
                     JSONObject aux = arrayResults.getJSONObject(i);
-                    Double ratingHotel = aux.getDouble("rating");
-                    String nombreHotel = aux.getString("name");
+                    Double ratingHotel = aux.optDouble("rating");
+                    String nombreHotel = aux.optString("name");
                     NombreHoteles.add(nombreHotel);
                     RatingHoteles.add(ratingHotel.floatValue());
                 }
@@ -80,7 +80,7 @@ public class ActivityTabHotels extends Fragment {
                     JSONArray photos = arrayResults.getJSONObject(i).getJSONArray("photos");
                     for(int j=0;j<photos.length();j++){
                         JSONObject c = photos.getJSONObject(j);
-                        String photoReference = c.getString("photo_reference");
+                        String photoReference = c.optString("photo_reference");
                         FotoHoteles.add(photoReference);
                     }
                 }

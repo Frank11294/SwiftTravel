@@ -193,9 +193,9 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
                   return tab3;
               case 3:
                   AcitivityTabOcio tab4= new AcitivityTabOcio();
-//                  Bundle bundle4 = new Bundle();
-//                  bundle4.putString("idLugar",idLugar);
-//                  tab4.setArguments(bundle4);
+                  Bundle bundle4 = new Bundle();
+                  bundle4.putString("nomLugar",nomLugar);
+                  tab4.setArguments(bundle4);
                   return tab4;
               default:
                   return null;

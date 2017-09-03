@@ -75,14 +75,15 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
                 holder =(ViewHolder) customView.getTag();
             }
 
+            if(!(position>_imagenesHoteles.length-1)) {
+                String nombre_Hotel = getItem(position);
+                float rate = _Rating.get(position);
+                Bitmap aux = _imagenesHoteles[position];
 
-            String nombre_Hotel = getItem(position);
-            float rate=_Rating.get(position);
-            Bitmap aux=_imagenesHoteles[position];
-
-            holder.textHotel.setText(nombre_Hotel);
-            holder.ratingBar.setRating(rate);
-            holder.imagenHotel.setImageBitmap(aux);
+                holder.textHotel.setText(nombre_Hotel);
+                holder.ratingBar.setRating(rate);
+                holder.imagenHotel.setImageBitmap(aux);
+            }
 
             return customView;
         }
