@@ -26,6 +26,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,13 +59,16 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private ProgressDialog barraDialogo;
     private ArrayList<String> fotosR;
     private Bitmap [] Fotos_Lugares;
-
+    private ImageView img_header;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private Button CrearViaje;
+    private FirebaseAuth firebaseAuth;
     private ViewPager viewPager;
+    private StorageReference mStorage;
     private AdaptadorPersonalizado_Swipe adaptador;
-
+    private FirebaseUser user;
+    private TextView emailUsuario,nomUsuario;
     private EditText fechaIn,fechaOut;
     private int anno_in, mes_in, dia_in,anno_out,mes_out,dia_out;
     private static  int TIPO_DIALOGO=0;
@@ -111,7 +123,51 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
         Log.e("ID DEL LUGAR: ",Placeid);
 
+
+        final View header_View = navigationView.getHeaderView(0);
+        emailUsuario = (TextView)header_View.findViewById(R.id.email_header);
+        nomUsuario = (TextView)header_View.findViewById(R.id.nom_header);
+        img_header = (ImageView)header_View.findViewById(R.id.img_header);
+
         //aqui extraigo el reference de google maps API Places
+
+        firebaseAuth =  FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
+        user = firebaseAuth.getCurrentUser();
+
+
+        String nombreUsuario=user.getDisplayName();
+        String email=user.getEmail();
+
+        emailUsuario.setText(email);
+
+
+        if(nombreUsuario!=null){
+            nomUsuario.setText(user.getDisplayName().toUpperCase());
+        }
+
+
+        mStorage.child("/Photos/Profile/"+user.getUid().substring(4)+"-default.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Glide.with(CrearViajeActivity2.this)
+                        .asBitmap()
+                        .apply(RequestOptions.centerCropTransform())
+                        .load(bytes)
+                        .into(img_header);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
 
         respuesta=String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s",Placeid,API_KEY);
@@ -203,7 +259,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                 anno_in =year;
                 mes_in =month;
                 dia_in =day;
-                fechaIn.setHint(anno_in +"/"+ mes_in +"/"+ dia_in);
+                fechaIn.setText(anno_in +"/"+ mes_in +"/"+ dia_in);
                 fechaEntrada = new Date(year,month,day);
             }
         };
@@ -214,7 +270,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                 anno_out =year;
                 mes_out =month;
                 dia_out =day;
-                fechaOut.setHint(anno_out +"/"+ mes_out +"/"+ dia_out);
+                fechaOut.setText(anno_out +"/"+ mes_out +"/"+ dia_out);
                 fechaSalida = new Date(year,month,day);
             }
         };
@@ -271,12 +327,16 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         CrearViaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent secondary_activity=new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class);
-                secondary_activity.putExtra("NombreLugar",Nom);
-                secondary_activity.putExtra("IdLugar",Placeid);
-                secondary_activity.putExtra("FechaIn",fechaEntrada);
-                secondary_activity.putExtra("FechaOut",fechaSalida);
-                startActivity(secondary_activity);
+                if(fechaIn.getText().toString().matches("") || fechaOut.getText().toString().matches("")){
+                    Toast.makeText(getApplicationContext(),"Introduzca la fecha de su viaje",Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent secondary_activity=new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class);
+                    secondary_activity.putExtra("NombreLugar",Nom);
+                    secondary_activity.putExtra("IdLugar",Placeid);
+                    secondary_activity.putExtra("FechaIn",fechaEntrada);
+                    secondary_activity.putExtra("FechaOut",fechaSalida);
+                    startActivity(secondary_activity);
+                }
             }
         });
 

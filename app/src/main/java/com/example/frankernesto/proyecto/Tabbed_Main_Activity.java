@@ -64,30 +64,22 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
     private static final int REQUEST_CAMERA = 1888;
     private static final int SELECT_FILE = 2888;
     private static int PROFILE_PIC_COUNT=0;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
     private ImageView img_header;
-
     private final String TAG = "Mi App";
     private Intent intent;
-
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private Toolbar mToolBar;
-
-
     private TextView emailUsuario,nomUsuario;
     private NavigationView navigationView;
     private PlaceAutocompleteFragment autocompleteFragment;
     private CharSequence[] items;
-
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
     private StorageReference mStorage;
     private ProgressDialog Progreso;
-
     private  AlertDialog.Builder constructor;
 
 

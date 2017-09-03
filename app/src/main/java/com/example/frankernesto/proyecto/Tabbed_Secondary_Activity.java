@@ -23,9 +23,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Date;
 
@@ -40,6 +50,12 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
     private String idLugar,nomLugar;
     private Date fechaIn,fechaOut;
     private TextView city,date;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
+    private StorageReference mStorage;
+    private TextView emailUsuario,nomUsuario;
+    private ImageView img_header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +73,52 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
         navigationView  = (NavigationView) findViewById(R.id.nav_view_3);
         //Fin de menu
 
+        final View header_View = navigationView.getHeaderView(0);
+
+        emailUsuario = (TextView)header_View.findViewById(R.id.email_header);
+        nomUsuario = (TextView)header_View.findViewById(R.id.nom_header);
+        img_header = (ImageView)header_View.findViewById(R.id.img_header);
+
+        firebaseAuth =  FirebaseAuth.getInstance();
+        mStorage = FirebaseStorage.getInstance().getReference();
+
+        if(firebaseAuth.getCurrentUser() == null){
+            finish();
+            startActivity(new Intent(this,LoginActivity.class));
+        }
+
+        user = firebaseAuth.getCurrentUser();
+
+
+        String nombreUsuario=user.getDisplayName();
+        String email=user.getEmail();
+
+        emailUsuario.setText(email);
+
+
+        if(nombreUsuario!=null){
+            nomUsuario.setText(user.getDisplayName().toUpperCase());
+        }
+
+
+
+        mStorage.child("/Photos/Profile/"+user.getUid().substring(4)+"-default.jpg").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Glide.with(Tabbed_Secondary_Activity.this)
+                        .asBitmap()
+                        .apply(RequestOptions.centerCropTransform())
+                        .load(bytes)
+                        .into(img_header);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
 
         mSectionsPagerAdapter_secondary = new SectionsPagerAdapter(getSupportFragmentManager());
-
-
         mViewPager_secondary = (ViewPager) findViewById(R.id.container_secondary);
         mViewPager_secondary.setAdapter(mSectionsPagerAdapter_secondary);
 
