@@ -187,9 +187,9 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
                   return tab2;
               case 2:
                   ActivityTabRenta tab3= new ActivityTabRenta();
-//                  Bundle bundle3 = new Bundle();
-//                  bundle3.putString("idLugar",idLugar);
-//                  tab3.setArguments(bundle3);
+                  Bundle bundle3 = new Bundle();
+                  bundle3.putString("nomLugar",nomLugar);
+                  tab3.setArguments(bundle3);
                   return tab3;
               case 3:
                   AcitivityTabOcio tab4= new AcitivityTabOcio();
@@ -215,7 +215,7 @@ public class Tabbed_Secondary_Activity extends AppCompatActivity {
                 case 1:
                     return "VUELOS";
                 case 2:
-                    return "RENTA";
+                    return "MUSEOS";
                 case 3:
                     return "OCIO";
             }

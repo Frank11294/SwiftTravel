@@ -11,25 +11,24 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 
 /**
  * Created by frank on 3/09/17.
  */
 
-public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> implements View.OnClickListener{
+public class AdaptadorPersonalizadoRenta extends ArrayAdapter<String> implements View.OnClickListener{
+
 
     private View customView;
     private Bitmap[] _imagenesHoteles;
     private ArrayList<Float> _Rating;
     private ViewHolder holder=null;
 
+    AdaptadorPersonalizadoRenta(Context context, ArrayList<String>nombreHoteles, ArrayList <Float>Rating, Bitmap [] imagenesHoteles){
 
-
-    AdaptadorPersonalizadoNightClubs(Context context, ArrayList<String>nombreHoteles, ArrayList <Float>Rating, Bitmap [] imagenesHoteles){
-
-        super(context,R.layout.custom_row_night_clubs,nombreHoteles);
+        super(context,R.layout.custom_row_renta,nombreHoteles);
 
         _imagenesHoteles=new Bitmap[imagenesHoteles.length];
         _Rating=new ArrayList<>();
@@ -41,7 +40,6 @@ public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> imple
         }
 
     }
-
     @NonNull
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -51,15 +49,15 @@ public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> imple
 
         if(customView == null){
 
-            customView = inflater.inflate(R.layout.custom_row_night_clubs,parent,false);
+            customView = inflater.inflate(R.layout.custom_row_renta,parent,false);
 
             holder=new ViewHolder();
 
 
 
-            holder.textHotel=customView.findViewById(R.id.nombre_nightClub);
-            holder.imagenHotel=customView.findViewById(R.id.imagen_nightClub);
-            holder.ratingBar=customView.findViewById(R.id.ratingBar_nightclub);
+            holder.textHotel=customView.findViewById(R.id.nombre_renta);
+            holder.imagenHotel=customView.findViewById(R.id.imagen_renta);
+            holder.ratingBar=customView.findViewById(R.id.ratingBar_renta);
 
 
 
@@ -86,8 +84,6 @@ public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> imple
     }
 
 
-
-
     static class ViewHolder {
 
         private TextView textHotel;
@@ -96,8 +92,6 @@ public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> imple
 
 
     }
-
-
     @Override
 
     public int getViewTypeCount() {
@@ -115,4 +109,5 @@ public class AdaptadorPersonalizadoNightClubs extends ArrayAdapter<String> imple
     public void onClick(View view) {
 
     }
+
 }

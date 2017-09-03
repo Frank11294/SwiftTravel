@@ -29,9 +29,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -300,6 +302,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent_imagen) {
         super.onActivityResult(requestCode, resultCode, intent_imagen);
@@ -348,7 +351,9 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
         Bundle extras = intent_imagen.getExtras();
         Bitmap imageBitmap = (Bitmap) extras.get("data");
 
+
         img_header.setImageBitmap(imageBitmap);
+
     }
 
 
