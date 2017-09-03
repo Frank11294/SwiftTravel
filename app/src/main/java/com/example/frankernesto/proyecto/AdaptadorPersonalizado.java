@@ -79,14 +79,10 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
             customView.setTag(holder);
             favBtn.setTag(position);
 
-            prefs = PreferenceManager.getDefaultSharedPreferences(customView.getContext());
-            boolean aux=prefs.getBoolean("Checked",Checked[position]);
-            if(aux) {
-                favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
-            } else {
-                favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
-                Checked[position] = false;
-            }
+
+        favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
+        Checked[position] = false;
+
 
 
         }else{
@@ -119,13 +115,12 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
         if(!Checked[position]) {
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
             Checked[position]=true;
-            prefs.edit().putBoolean("Checked", Checked[position]).apply();
-
         } else {
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             Checked[position] = false;
-            prefs.edit().putBoolean("Checked", Checked[position]).apply();
         }
+
+
 
     }
 

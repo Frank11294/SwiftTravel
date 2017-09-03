@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -118,8 +119,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
 
         // ESTO NO SE PUEDE QUEDAR ASI (estas dos lineas hay q arreglarlas)
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+
 
         Log.e("ID DEL LUGAR: ",Placeid);
 
@@ -172,9 +172,15 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
         respuesta=String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%s&key=%s",Placeid,API_KEY);
 
+        //Aqui empieza
 
         servicio= new URLServicio();
-        String jsonStr = servicio.UrlServicio(respuesta);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String jsonStr=null;
+        jsonStr = servicio.UrlServicio(respuesta);
+
+
 
 
         fotosR = new ArrayList<>();
@@ -233,6 +239,9 @@ public class CrearViajeActivity2 extends AppCompatActivity {
 
 
         }
+
+        // Hasta aqui to do lo que tengo que hacer con la async task
+
 // Esto es lo de las imagenes
         viewPager=(ViewPager)findViewById(R.id.view_pager_fotos);
         adaptador = new AdaptadorPersonalizado_Swipe(this,Fotos_Lugares);
