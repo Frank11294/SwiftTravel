@@ -82,6 +82,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
     private StorageReference mStorage;
     private ProgressDialog Progreso;
     private  AlertDialog.Builder constructor;
+    private String nombre;
 
 
     @Override
@@ -275,7 +276,7 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
                 Log.i(TAG, "Place: " + place.getName());
 
                 String id = place.getId();
-                String nombre = place.getName().toString();
+                nombre = place.getName().toString();
 
 
                 intent = new Intent(getApplicationContext(),CrearViajeActivity2.class);
@@ -393,6 +394,9 @@ public class Tabbed_Main_Activity extends AppCompatActivity {
 
                 case 1:
                     ActivityTabWhislist tab2=new ActivityTabWhislist();
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putString("Nom",nombre);
+                    tab2.setArguments(bundle2);
                     return tab2;
                 default:
 

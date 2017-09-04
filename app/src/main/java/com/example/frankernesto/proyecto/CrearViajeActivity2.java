@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -362,23 +363,32 @@ public class CrearViajeActivity2 extends AppCompatActivity {
                     secondary_activity.putExtra("FechaIn",fechaEntrada);
                     secondary_activity.putExtra("FechaOut",fechaSalida);
 
-                    FirebaseIdUser = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("ID");
+                    String diaEntrada  = (String) DateFormat.format("dd",   fechaEntrada); // 20
+                    String mesEntrada  = (String) DateFormat.format("MMM",  fechaEntrada); // Jun
+
+                    String diaSalida  = (String) DateFormat.format("dd",   fechaSalida); // 20
+                    String mesSalida  = (String) DateFormat.format("MMM",  fechaSalida); // Jun
+
+                    String FechaIn=diaEntrada+"-"+mesEntrada;
+                    String FechaOut=diaSalida+"-"+mesSalida;
+
+                    FirebaseIdUser = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("ID");
                     FirebaseIdUser.setValue(user.getUid());
 
-                    FirebaseViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("ID Viaje");
+                    FirebaseViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+Nom).child("IDViaje");
                     FirebaseViaje.setValue(Placeid);
 
-                    FirebaseNombreViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Nombre Viaje");
+                    FirebaseNombreViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+Nom).child("NombreViaje");
                     FirebaseNombreViaje.setValue(nombreV);
 
-                    FirebaseNombreLugar = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Nombre Lugar");
+                    FirebaseNombreLugar = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+Nom).child("NombreLugar");
                     FirebaseNombreLugar.setValue(Nom);
 
-                    FirebaseFechaEntrada = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Fecha In");
-                    FirebaseFechaEntrada.setValue(fechaEntrada);
+                    FirebaseFechaEntrada = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+Nom).child("FechaIn");
+                    FirebaseFechaEntrada.setValue(FechaIn);
 
-                    FirebaseFechaSalida = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Fecha Out");
-                    FirebaseFechaSalida.setValue(fechaSalida);
+                    FirebaseFechaSalida = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+Nom).child("FechaOut");
+                    FirebaseFechaSalida.setValue(FechaOut);
 
 
                     startActivity(secondary_activity);

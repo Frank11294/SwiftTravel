@@ -2,6 +2,7 @@ package com.example.frankernesto.proyecto;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
@@ -18,6 +19,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,20 +36,31 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
         private View customView;
         private Bitmap[] _imagenesHoteles;
         private ArrayList <Float>_Rating;
+        private ArrayList <String>_nombreHoteles;
         private ViewHolder holder=null;
         private  AlertDialog.Builder constructor;
         private CharSequence[] items;
+        private FirebaseUser user;
+        private String NomLugar;
 
 
+       private  DatabaseReference FirebaseNombreHotel;
+       private FirebaseAuth firebaseAuth;
 
-    AdaptadorPersonalizadoHoteles(Context context, ArrayList<String>nombreHoteles,ArrayList <Float>Rating,Bitmap [] imagenesHoteles){
+
+    AdaptadorPersonalizadoHoteles(Context context, ArrayList<String>nombreHoteles,ArrayList <Float>Rating,Bitmap [] imagenesHoteles,String PlaceName){
 
             super(context,R.layout.custom_row_hotels,nombreHoteles);
+
+              firebaseAuth =  FirebaseAuth.getInstance();
+              user = firebaseAuth.getCurrentUser();
+              NomLugar=PlaceName;
+
 
              _imagenesHoteles=new Bitmap[imagenesHoteles.length];
              _Rating=new ArrayList<>();
              _Rating=Rating;
-
+             _nombreHoteles=nombreHoteles;
 
              for(int i=0;i<imagenesHoteles.length;i++){
                this._imagenesHoteles=imagenesHoteles;
@@ -106,7 +123,8 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
                 public void onClick(DialogInterface dialog, int item) {
 
                     if (items[item].equals("Añadir al Viaje")) {
-
+                        FirebaseNombreHotel = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("User-"+user.getUid()).child("Viajes").child("Viaje-"+NomLugar).child("Hotel");
+                        FirebaseNombreHotel.setValue(_nombreHoteles.get(position));
                     }
                     if (items[item].equals("Cancelar")) {
                         dialog.dismiss();

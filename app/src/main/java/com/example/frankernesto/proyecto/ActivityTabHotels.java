@@ -116,7 +116,7 @@ public class ActivityTabHotels extends Fragment {
             }
         }
 
-            ListAdapter myAdapter = new AdaptadorPersonalizadoHoteles(rootView.getContext(), NombreHoteles, RatingHoteles, Fotos_Hoteles);
+            ListAdapter myAdapter = new AdaptadorPersonalizadoHoteles(rootView.getContext(), NombreHoteles, RatingHoteles, Fotos_Hoteles,PlaceName);
 
             miLista = (ListView) rootView.findViewById(R.id.miListaHoteles);
 
