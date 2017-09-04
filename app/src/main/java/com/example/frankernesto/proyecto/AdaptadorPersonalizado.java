@@ -1,11 +1,16 @@
 package com.example.frankernesto.proyecto;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +35,10 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     private int [] _imagenes;
     private Boolean [] Checked ={false,false,false,false};
     private ViewHolder holder=null;
+    private  AlertDialog.Builder constructor;
+    private CharSequence[] items;
     private SharedPreferences prefs;
-
+    private int posicion=0;
 
     private ArrayList mToggles;
 
@@ -57,7 +64,7 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-
+        posicion=position;
         customView = convertView;
 
         if(customView == null){
@@ -77,7 +84,9 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
             holder.imagen=customView.findViewById(R.id.imagen);
 
             customView.setTag(holder);
+
             favBtn.setTag(position);
+
 
 
         favBtn.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
@@ -87,7 +96,16 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
 
         }else{
             holder = (ViewHolder) customView.getTag();
+            customView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    constructor.show();
+                }
+            });
+
         }
+
+
 
         String ciudad = getItem(position);
         String pais=_paises[position];
@@ -98,11 +116,33 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
         holder.imagen.setImageResource(_imagenes[position]);
 
 
+        items = new CharSequence[]{"Crear Viaje", "Guardar", "Cancelar"};
 
+        constructor = new AlertDialog.Builder(getContext());
+        constructor.setTitle("Seleccione un opcion: ");
+
+        constructor.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int item) {
+
+                if (items[item].equals("Crear Viaje")) {
+
+                }
+                if (items[item].equals("Guardar")) {
+
+                }
+                if (items[item].equals("Cancelar")) {
+                    dialog.dismiss();
+                }
+
+            }
+        });
 
 
         return customView;
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -111,7 +151,6 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
 
         int position=(Integer) fav.getTag();
 
-
         if(!Checked[position]) {
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.like_1));
             Checked[position]=true;
@@ -119,8 +158,6 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
             fav.setBackgroundDrawable(ContextCompat.getDrawable(customView.getContext(), R.drawable.dislike_1));
             Checked[position] = false;
         }
-
-
 
     }
 
@@ -135,7 +172,7 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
 
     public int getViewTypeCount() {
 
-        return 1;
+        return getCount();
     }
 
     @Override
@@ -144,6 +181,11 @@ class AdaptadorPersonalizado extends ArrayAdapter<String>  implements View.OnCli
         return position;
     }
 
+    @Nullable
+    @Override
+    public String getItem(int position) {
+        return super.getItem(position);
+    }
 }
 
 

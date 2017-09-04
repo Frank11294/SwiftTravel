@@ -33,6 +33,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -66,6 +68,7 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private Button CrearViaje;
     private FirebaseAuth firebaseAuth;
     private ViewPager viewPager;
+    private EditText nombreViaje;
     private StorageReference mStorage;
     private AdaptadorPersonalizado_Swipe adaptador;
     private FirebaseUser user;
@@ -75,6 +78,14 @@ public class CrearViajeActivity2 extends AppCompatActivity {
     private static  int TIPO_DIALOGO=0;
     private static DatePickerDialog.OnDateSetListener oyenteSelectorFecha_IN,oyenteSelectorFecha_OUT;
     private Date fechaEntrada,fechaSalida;
+
+    DatabaseReference FirebaseIdUser;
+    DatabaseReference FirebaseViaje;
+    DatabaseReference FirebaseNombreViaje;
+    DatabaseReference FirebaseNombreLugar;
+    DatabaseReference FirebaseFechaEntrada;
+    DatabaseReference FirebaseFechaSalida;
+
 
 
     private NavigationView navigationView;
@@ -128,6 +139,9 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         emailUsuario = (TextView)header_View.findViewById(R.id.email_header);
         nomUsuario = (TextView)header_View.findViewById(R.id.nom_header);
         img_header = (ImageView)header_View.findViewById(R.id.img_header);
+
+
+        nombreViaje = (EditText) findViewById(R.id.nombreViaje);
 
         //aqui extraigo el reference de google maps API Places
 
@@ -332,18 +346,41 @@ public class CrearViajeActivity2 extends AppCompatActivity {
         });
 
 
+
         //Aqui paso los datos a firebase de en dia de entrada , el dia de salida y el nombre de la ciudad
         CrearViaje.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fechaIn.getText().toString().matches("") || fechaOut.getText().toString().matches("")){
-                    Toast.makeText(getApplicationContext(),"Introduzca la fecha de su viaje",Toast.LENGTH_SHORT).show();
+                if(fechaIn.getText().toString().matches("") || fechaOut.getText().toString().matches("") || nombreViaje.getText().toString().matches("")){
+                    Toast.makeText(getApplicationContext(),"Introduzca la fecha de su viaje y el nombre",Toast.LENGTH_SHORT).show();
                 }else{
+                    String nombreV=nombreViaje.getText().toString();
+
                     Intent secondary_activity=new Intent(getApplicationContext(),Tabbed_Secondary_Activity.class);
                     secondary_activity.putExtra("NombreLugar",Nom);
                     secondary_activity.putExtra("IdLugar",Placeid);
                     secondary_activity.putExtra("FechaIn",fechaEntrada);
                     secondary_activity.putExtra("FechaOut",fechaSalida);
+
+                    FirebaseIdUser = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("ID");
+                    FirebaseIdUser.setValue(user.getUid());
+
+                    FirebaseViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("ID Viaje");
+                    FirebaseViaje.setValue(Placeid);
+
+                    FirebaseNombreViaje = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Nombre Viaje");
+                    FirebaseNombreViaje.setValue(nombreV);
+
+                    FirebaseNombreLugar = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Nombre Lugar");
+                    FirebaseNombreLugar.setValue(Nom);
+
+                    FirebaseFechaEntrada = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Fecha In");
+                    FirebaseFechaEntrada.setValue(fechaEntrada);
+
+                    FirebaseFechaSalida = FirebaseDatabase.getInstance().getReference().child("Usuarios").child("Usuario").child("Viajes").child("Viaje").child("Fecha Out");
+                    FirebaseFechaSalida.setValue(fechaSalida);
+
+
                     startActivity(secondary_activity);
                 }
             }

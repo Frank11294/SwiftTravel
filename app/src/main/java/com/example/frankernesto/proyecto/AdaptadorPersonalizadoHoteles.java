@@ -1,12 +1,14 @@
 package com.example.frankernesto.proyecto;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
         private Bitmap[] _imagenesHoteles;
         private ArrayList <Float>_Rating;
         private ViewHolder holder=null;
+        private  AlertDialog.Builder constructor;
+        private CharSequence[] items;
 
 
 
@@ -73,6 +77,12 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
 
             }else{
                 holder =(ViewHolder) customView.getTag();
+                customView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        constructor.show();
+                    }
+                });
             }
 
             if(!(position>_imagenesHoteles.length-1)) {
@@ -84,6 +94,27 @@ public class AdaptadorPersonalizadoHoteles extends ArrayAdapter<String>  impleme
                 holder.ratingBar.setRating(rate);
                 holder.imagenHotel.setImageBitmap(aux);
             }
+
+
+            items = new CharSequence[]{"Añadir al Viaje", "Cancelar"};
+
+            constructor = new AlertDialog.Builder(getContext());
+            constructor.setTitle("Seleccione un opcion: ");
+
+            constructor.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int item) {
+
+                    if (items[item].equals("Añadir al Viaje")) {
+
+                    }
+                    if (items[item].equals("Cancelar")) {
+                        dialog.dismiss();
+                    }
+
+                }
+            });
+
 
             return customView;
         }

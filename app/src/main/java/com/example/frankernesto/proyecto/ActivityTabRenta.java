@@ -126,8 +126,7 @@ public class ActivityTabRenta extends Fragment {
                     new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
+                            Toast.makeText(getContext(),""+i,Toast.LENGTH_SHORT).show();
                         }
                     }
             );
