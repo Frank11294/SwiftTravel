@@ -60,7 +60,7 @@ public class ActivityTabWhislist extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Viajes viaje = (Viajes)dataSnapshot.getValue(Viajes.class);
-                String Viaje = viaje.getNombreViaje();
+                String Viaje = "Nombre del Viaje: "+viaje.getNombreViaje()+"\nCiudad: "+viaje.getNombreLugar()+"\nHotel: "+viaje.getHotel();
                 System.out.print(dataSnapshot.getValue());
                 listaViajes.add(Viaje);
                 arrayAdapter.notifyDataSetChanged();
